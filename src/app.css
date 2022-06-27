@@ -1,0 +1,23 @@
+.App {
+  
+    margin: 10px;
+}
+
+.llista {
+    margin: 1rem;
+    list-style: none;
+    padding: 0;
+    
+}
+
+.llista-cb {
+
+  display: inline-block;
+  
+
+}
+
+.total {
+  list-style: none;
+}
+
