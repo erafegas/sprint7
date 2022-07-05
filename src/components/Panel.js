@@ -1,4 +1,4 @@
-import { Fragment, useState}  from "react";
+import { Fragment, useState, useEffect}  from "react";
 import styled from "styled-components";
 
 
@@ -25,6 +25,22 @@ const  Panel =  () => {
   const [paginas, setPaginas] = useState(0);
   const [idiomas, setIdiomas] = useState(0);
 
+  useEffect(() => {
+    setTotal(parseInt(localStorage.getItem('total')))
+    setIdiomas(parseInt(localStorage.getItem('idiomas')))
+    setPaginas(parseInt(localStorage.getItem('paginas')))
+  }, [])
+
+
+  useEffect(() => {   
+    localStorage.setItem('paginas', paginas)
+    localStorage.setItem('idiomas', idiomas)
+    localStorage.setItem('total', total)
+
+}, [paginas, idiomas, total])
+
+
+/*
   const handleChangeInputs = (valor , nom) => {
 
       if ( nom === "pags") {
@@ -36,6 +52,23 @@ const  Panel =  () => {
         setTotal(preus.web + (valor * paginas * 30));
       }
   }
+*/
+
+function handleChangePags(pageCallback){
+  setPaginas(pageCallback)
+  localStorage.setItem('paginas', paginas)
+
+  setTotal(preus.web + (paginas * idiomas * 30))
+  localStorage.setItem('total', total)  
+}
+
+function handleChangeIdis(languageCallback){
+  setIdiomas(languageCallback)
+  localStorage.setItem('languages', idiomas)
+
+  setTotal(preus.web + (paginas * idiomas * 30))
+  localStorage.setItem('total', total)  
+}
 
   const handleChange = (event) => {
 
@@ -69,19 +102,15 @@ const  Panel =  () => {
           <label htmlFor ="web"> Una pàgina web (500€) </label>
         </li>
         <div style={{ display: inputs}}>
-          <InputsPanel >
+          <InputsPanel>
             <label htmlFor="pags"> Número de páginas </label> 
-              <input type='text' name="pags" onChange={(event) => {
-                const valor = event.target.value
-                const nom = event.target.name
-                handleChangeInputs(valor, nom)
-              }}/> 
+            <button type="button" onClick={() => handleChangePags( paginas => paginas - 1)}> - </button>
+              <input type='text' value={paginas} min={0} id="pags"/> 
+            <button type="button" onClick={() => handleChangePags( paginas => paginas + 1)}> + </button>
             <label htmlFor="lng"> Número de idiomas  </label> 
-              <input type='text' name="idi" onChange={(event) => {
-                const valor = event.target.value
-                const nom = event.target.name
-                handleChangeInputs(valor, nom)
-              }}/> 
+            <button type="button" onClick={() => handleChangeIdis( idiomas => idiomas - 1)}> - </button>
+              <input type='text'  value={idiomas} min={0} id="idi"/>  
+            <button  type="button" onClick={() => handleChangeIdis( idiomas => idiomas + 1)}> + </button>
           </InputsPanel> 
         </div>
         <li className='llista'> 
