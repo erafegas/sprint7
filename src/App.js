@@ -1,10 +1,6 @@
 import './app.css';
-import Panel from "./components/Panel";
-
 
   function App() {
-     
-
   return (
     <div className="App"> 
     <nav>
