@@ -25,19 +25,17 @@ const  Panel =  () => {
   const [paginas, setPaginas] = useState(0);
   const [idiomas, setIdiomas] = useState(0);
 
-  useEffect(() => {
+  useEffect(() => {    
     setTotal(parseInt(localStorage.getItem('total')))
-    setIdiomas(parseInt(localStorage.getItem('idiomas')))
     setPaginas(parseInt(localStorage.getItem('paginas')))
+    setIdiomas(parseInt(localStorage.getItem('idiomas')))
   }, [])
 
-
   useEffect(() => {   
+       localStorage.setItem('total', total)
     localStorage.setItem('paginas', paginas)
     localStorage.setItem('idiomas', idiomas)
-    localStorage.setItem('total', total)
-
-}, [paginas, idiomas, total])
+ }, [paginas, idiomas, total])
 
 
 /*
@@ -54,18 +52,16 @@ const  Panel =  () => {
   }
 */
 
-function handleChangePags(pageCallback){
-  setPaginas(pageCallback)
+function handleChangePags(pags){
+  setPaginas(pags)
   localStorage.setItem('paginas', paginas)
-
   setTotal(preus.web + (paginas * idiomas * 30))
   localStorage.setItem('total', total)  
 }
 
-function handleChangeIdis(languageCallback){
-  setIdiomas(languageCallback)
-  localStorage.setItem('languages', idiomas)
-
+function handleChangeIdis(idis){
+  setIdiomas(idis)
+  localStorage.setItem('idiomas', idiomas)
   setTotal(preus.web + (paginas * idiomas * 30))
   localStorage.setItem('total', total)  
 }
@@ -78,6 +74,8 @@ function handleChangeIdis(languageCallback){
 
   if (isCheck) {
     setTotal(total + preuServei);
+    localStorage.setItem('total', total)
+
     if (nameCheckbox === 'web') {
       setInputs('block');
       setTotal(total + preuServei);
@@ -103,14 +101,14 @@ function handleChangeIdis(languageCallback){
         </li>
         <div style={{ display: inputs}}>
           <InputsPanel>
-            <label htmlFor="pags"> Número de páginas </label> 
-            <button type="button" onClick={() => handleChangePags( paginas => paginas - 1)}> - </button>
-              <input type='text' value={paginas} min={0} id="pags"/> 
-            <button type="button" onClick={() => handleChangePags( paginas => paginas + 1)}> + </button>
-            <label htmlFor="lng"> Número de idiomas  </label> 
-            <button type="button" onClick={() => handleChangeIdis( idiomas => idiomas - 1)}> - </button>
-              <input type='text'  value={idiomas} min={0} id="idi"/>  
-            <button  type="button" onClick={() => handleChangeIdis( idiomas => idiomas + 1)}> + </button>
+            <label htmlFor="paginas"> Número de páginas </label> 
+            <button type="button" onClick={() => handleChangePags( pagina => pagina- 1)}> - </button>
+              <input type='text' value={paginas} min={0} id="paginas"/> 
+            <button type="button" onClick={() => handleChangePags( pagina => pagina + 1)}> + </button>
+            <label htmlFor="idiomas"> Número de idiomas  </label> 
+            <button type="button" onClick={() => handleChangeIdis( idioma => idioma - 1)}> - </button>
+              <input type='text'  value={idiomas} min={0} id="idiomas"/>  
+            <button  type="button" onClick={() => handleChangeIdis( idioma => idioma + 1)}> + </button>
           </InputsPanel> 
         </div>
         <li className='llista'> 
